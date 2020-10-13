@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.css.im.websocket.mapper.WsServerMapper">
+  <resultMap id="BaseResultMap" type="com.css.im.websocket.model.WsServer">
+    <id column="server_id" jdbcType="VARCHAR" property="serverId" />
+    <result column="server_key" jdbcType="VARCHAR" property="serverKey" />
+    <result column="app_versions" jdbcType="VARCHAR" property="appVersions" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="ws_version" jdbcType="VARCHAR" property="wsVersion" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.css.im.websocket.model.WsServer">
+    <result column="ws_url" jdbcType="LONGVARCHAR" property="wsUrl" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    server_id, server_key, app_versions, create_time, ws_version
+  </sql>
+  <sql id="Blob_Column_List">
+    ws_url, remark
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.css.im.websocket.model.WsServerExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ws_server
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.css.im.websocket.model.WsServerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ws_server
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ws_server
+    where server_id = #{serverId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ws_server
+    where server_id = #{serverId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.css.im.websocket.model.WsServerExample">
+    delete from ws_server
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.css.im.websocket.model.WsServer">
+    insert into ws_server (server_id, server_key, app_versions, 
+      create_time, ws_version, ws_url, 
+      remark)
+    values (#{serverId,jdbcType=VARCHAR}, #{serverKey,jdbcType=VARCHAR}, #{appVersions,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{wsVersion,jdbcType=VARCHAR}, #{wsUrl,jdbcType=LONGVARCHAR}, 
+      #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.css.im.websocket.model.WsServer">
+    insert into ws_server
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serverId != null">
+        server_id,
+      </if>
+      <if test="serverKey != null">
+        server_key,
+      </if>
+      <if test="appVersions != null">
+        app_versions,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="wsVersion != null">
+        ws_version,
+      </if>
+      <if test="wsUrl != null">
+        ws_url,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serverId != null">
+        #{serverId,jdbcType=VARCHAR},
+      </if>
+      <if test="serverKey != null">
+        #{serverKey,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersions != null">
+        #{appVersions,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="wsVersion != null">
+        #{wsVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUrl != null">
+        #{wsUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.css.im.websocket.model.WsServerExample" resultType="java.lang.Long">
+    select count(*) from ws_server
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ws_server
+    <set>
+      <if test="record.serverId != null">
+        server_id = #{record.serverId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serverKey != null">
+        server_key = #{record.serverKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appVersions != null">
+        app_versions = #{record.appVersions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsVersion != null">
+        ws_version = #{record.wsVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsUrl != null">
+        ws_url = #{record.wsUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update ws_server
+    set server_id = #{record.serverId,jdbcType=VARCHAR},
+      server_key = #{record.serverKey,jdbcType=VARCHAR},
+      app_versions = #{record.appVersions,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      ws_version = #{record.wsVersion,jdbcType=VARCHAR},
+      ws_url = #{record.wsUrl,jdbcType=LONGVARCHAR},
+      remark = #{record.remark,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ws_server
+    set server_id = #{record.serverId,jdbcType=VARCHAR},
+      server_key = #{record.serverKey,jdbcType=VARCHAR},
+      app_versions = #{record.appVersions,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      ws_version = #{record.wsVersion,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.css.im.websocket.model.WsServer">
+    update ws_server
+    <set>
+      <if test="serverKey != null">
+        server_key = #{serverKey,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersions != null">
+        app_versions = #{appVersions,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="wsVersion != null">
+        ws_version = #{wsVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="wsUrl != null">
+        ws_url = #{wsUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where server_id = #{serverId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.css.im.websocket.model.WsServer">
+    update ws_server
+    set server_key = #{serverKey,jdbcType=VARCHAR},
+      app_versions = #{appVersions,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      ws_version = #{wsVersion,jdbcType=VARCHAR},
+      ws_url = #{wsUrl,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where server_id = #{serverId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.css.im.websocket.model.WsServer">
+    update ws_server
+    set server_key = #{serverKey,jdbcType=VARCHAR},
+      app_versions = #{appVersions,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      ws_version = #{wsVersion,jdbcType=VARCHAR}
+    where server_id = #{serverId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>imserver</artifactId>
+        <groupId>com.css</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.css</groupId>
+    <version>1.0-SNAPSHOT</version>
+    <artifactId>im-server</artifactId>
+    <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <skipTests>true</skipTests>    <!--默认关掉单元测试 -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.css.ImServer</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--            &lt;!&ndash; maven 打包集成插件 &ndash;&gt;-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-assembly-plugin</artifactId>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        &lt;!&ndash; 绑定到package生命周期 &ndash;&gt;-->
+            <!--                        <phase>package</phase>-->
+            <!--                        <goals>-->
+            <!--                            &lt;!&ndash; 只运行一次 &ndash;&gt;-->
+            <!--                            <goal>single</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--                <configuration>-->
+            <!--                    <descriptorRefs>-->
+            <!--                        &lt;!&ndash; 将依赖一起打包到 JAR &ndash;&gt;-->
+            <!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+            <!--                    </descriptorRefs>-->
+            <!--                    <archive>-->
+            <!--                        <manifest>-->
+            <!--                            &lt;!&ndash; 配置主程序 java -jar 默认Class &ndash;&gt;-->
+            <!--                            <addClasspath>true</addClasspath>-->
+            <!--                            <classpathPrefix>lib/</classpathPrefix>-->
+            <!--                            <mainClass>com.css.ImServer</mainClass>-->
+            <!--                        </manifest>-->
+            <!--                    </archive>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
+            <!--            -->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-jar-plugin</artifactId>-->
+            <!--                <version>2.4</version>-->
+            <!--                &lt;!&ndash; 对要打的jar包进行配置 &ndash;&gt;-->
+            <!--                <configuration>-->
+            <!--                    &lt;!&ndash; Configuration of the archiver &ndash;&gt;-->
+            <!--                    <archive>-->
+            <!--                        &lt;!&ndash;生成的jar中，不要包含pom.xml和pom.properties这两个文件&ndash;&gt;-->
+            <!--                        <addMavenDescriptor>false</addMavenDescriptor>-->
+
+            <!--                        &lt;!&ndash; Manifest specific configuration &ndash;&gt;-->
+            <!--                        <manifest>-->
+            <!--                            &lt;!&ndash;是否要把第三方jar放到manifest的classpath中&ndash;&gt;-->
+            <!--                            <addClasspath>true</addClasspath>-->
+
+            <!--                            &lt;!&ndash;生成的manifest中classpath的前缀，-->
+            <!--                            因为要把第三方jar放到lib目录下，-->
+            <!--                            所以classpath的前缀是lib/&ndash;&gt;-->
+            <!--                            <classpathPrefix>lib/</classpathPrefix>-->
+            <!--                        </manifest>-->
+            <!--                    </archive>-->
+            <!--                    &lt;!&ndash;过滤掉不希望包含在jar中的文件&ndash;&gt;-->
+            <!--                    <excludes>-->
+            <!--                        &lt;!&ndash; 排除不需要的文件夹(路径是jar包内部的路径) &ndash;&gt;-->
+            <!--                        <exclude>**/assembly/</exclude>-->
+            <!--                    </excludes>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!--多音字节处理-->
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sdt</groupId>
+            <artifactId>NetUserAttr</artifactId>
+            <version>2.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../lib/NetUserAttr.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.dm</groupId>
+            <artifactId>Dm7JdbcDriver</artifactId>
+            <version>1.8</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../lib/Dm7JdbcDriver18.jar</systemPath>
+        </dependency>
+
+    </dependencies>
+
+
+</project>

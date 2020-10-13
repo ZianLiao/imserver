@@ -1,0 +1,32 @@
+1、org_dept
+    dept_id、dept_name、father_id、dept_code、create_time、status、creater、remark
+2、org_user_dept
+user_dpet_id、user_id、dept_id、create_time
+
+
+CREATE TABLE `org_dept` (
+  `dept_id` varchar(32) CHARACTER SET utf8mb4 NOT NULL,
+  `dept_name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `father_id` varchar(32) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `dept_code` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `create_time` varchar(20) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `status` smallint(6) DEFAULT NULL,
+  `creater` varchar(32) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `remark` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  PRIMARY KEY (`dept_id`),
+  KEY `fk_dept_dept` (`father_id`),
+  CONSTRAINT `fk_dept_dept` FOREIGN KEY (`father_id`) REFERENCES `org_dept` (`dept_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `org_user_dept` (
+  `user_dpet_id` varchar(32) CHARACTER SET utf8mb4 NOT NULL,
+  `user_id` varchar(32) CHARACTER SET utf8mb4 NOT NULL,
+  `dept_id` varchar(32) CHARACTER SET utf8mb4 NOT NULL,
+  `create_time` varchar(20) CHARACTER SET utf8mb4 DEFAULT NULL,
+  PRIMARY KEY (`user_dpet_id`),
+  KEY `fk_user_depts` (`user_id`),
+  KEY `fk_dept_org` (`dept_id`),
+  CONSTRAINT `fk_dept_org` FOREIGN KEY (`dept_id`) REFERENCES `org_dept` (`dept_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_depts` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

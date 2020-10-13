@@ -1,0 +1,55 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: imserver
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: root
+    password: root
+  servlet:
+    multipart:
+      max-file-size: 100000MB
+      max-request-size: 100000MB
+      enabled: true
+      file-size-threshold: 200MB
+
+server:
+  tomcat:
+    threads:
+      max: 1000
+      min-spare: 10
+    accept-count: 2000
+
+
+
+
+##jwt 配置
+jwt:
+  # 代表这个JWT的接收对象,存入audience
+  clientId: 098f6bcd4621d373cade4e832627b4f6
+  # 密钥, 经过Base64加密, 可自行替换
+  base64Secret: MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=
+  # JWT的签发主体，存入issuer
+  name: restapiuser
+  # 0 永远不过期，432000000 5天
+  expiration: 432000000
+
+
+
+#文件相关的配置
+file:
+  #存储路径
+  storage: D:/CSS/workspace/IM/IMFile/files
+  #文件地址
+  url: http://xxxx
+  #文件删除开关yes/no
+  delete: no
+  #头像相关
+  basicHeadPath: D:/CSS/workspace/IM/IMFile/files/userHeadFile
+  cacheMsgPath: D:/CSS/workspace/IM/IMFile/files/messageCacheFile
+
+ws:
+  server: ws://10.13.250.69:8080
+
